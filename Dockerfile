@@ -20,6 +20,7 @@ RUN pip install --no-cache-dir --upgrade pip &&\
 
 ENV FLASK_APP=flaskr
 ENV FLASK_ENV=development
+RUN flask init-db
 
 
 ## Step 4:
@@ -27,4 +28,4 @@ ENV FLASK_ENV=development
 EXPOSE 80
 
 ## Step 5
-CMD ["flask", "init-db"]
+CMD ["flask", "run", "--host=0.0.0.0"]
