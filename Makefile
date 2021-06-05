@@ -27,6 +27,6 @@ lint:
 	# hadolint Dockerfile
 	# This is a linter for Python source code linter: https://www.pylint.org/
 	# This should be run from inside a virtualenv
-	pylint --disable=R,C,W1203,W1309,W1202 app.py
+	pylint --disable=R,C,W0621,W0622,E0237,W0613 tests/*.py flaskr/*.py
 
 all: install
