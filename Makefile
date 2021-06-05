@@ -13,7 +13,7 @@ install:
 	# This should be run from inside a virtualenv
 	pip install --upgrade pip &&\
 		pip install -e .
-	pip install '.[test]'
+	# pip install '.[test]'
 	pip install -r requirements.txt
 
 test:
@@ -24,9 +24,9 @@ test:
 lint:
 	# See local hadolint install instructions:   https://github.com/hadolint/hadolint
 	# This is linter for Dockerfiles
-	# hadolint Dockerfile
+	hadolint Dockerfile
 	# This is a linter for Python source code linter: https://www.pylint.org/
 	# This should be run from inside a virtualenv
 	pylint --disable=R,C,W0621,W0622,E0237,W0613 tests/*.py flaskr/*.py
 
-all: install
+all: install lint test
