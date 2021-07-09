@@ -25,7 +25,7 @@ RUN flask init-db
 
 ## Step 4:
 # Expose port 80
-EXPOSE 5000
+EXPOSE 80
 
 ## Step 5
 CMD ["flask", "run", "--host=0.0.0.0"]
