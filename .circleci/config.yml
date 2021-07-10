@@ -1,1 +1,24 @@
 version: 2.1
+
+jobs:
+
+  linting:
+    docker:
+      - image: python:3.7.3-stretch
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: Install dependencies
+          working_directory: .
+          command: |
+            pip install --upgrade pip
+            pip install -e .
+	          pip install -r requirements.txt
+      - run: make lint
+
+
+workflows:
+  default:
+    - linting
