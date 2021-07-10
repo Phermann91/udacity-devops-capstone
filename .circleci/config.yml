@@ -1,7 +1,6 @@
 version: 2.1
 
 jobs:
-
   linting:
     docker:
       - image: python:3.7.3-stretch
@@ -21,4 +20,5 @@ jobs:
 
 workflows:
   default:
-    - linting
+    jobs:
+      - linting
