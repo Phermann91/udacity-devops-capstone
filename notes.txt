@@ -1,0 +1,6 @@
+Commands for setting up EKS:
+eksctl create cluster --name capstone-demo --managed --node-type "t2.small" --nodes 2
+kubectl apply -f deployment-template.yml
+kubectl get services
+
+The last command returns a external IP which you need just to paste into a browser, than everything works
