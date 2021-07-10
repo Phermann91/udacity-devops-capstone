@@ -11,6 +11,8 @@ COPY . instance/ /app/
 COPY . setup.py /app/
 COPY . setup.cfg /app/
 
+mess it up
+
 ## Step 3:
 # install packages
 # hadolint ignore=DL3013
