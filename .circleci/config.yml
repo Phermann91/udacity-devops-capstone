@@ -3,7 +3,7 @@ version: 2.1
 #test
 
 jobs:
-  linting:
+  linting_tesing:
     docker:
       - image: python:3.7.3-stretch
     steps:
@@ -39,8 +39,16 @@ jobs:
           command: |
             . venv/bin/activate
             make lint
+
+      # run tests!
+      - run:
+          name: run tests
+          command: |
+            . venv/bin/activate
+            make test
+
       
 workflows:
   default:
     jobs:
-      - linting
+      - linting_testing
