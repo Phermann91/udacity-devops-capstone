@@ -5,7 +5,7 @@ version: 2.1
 jobs:
   linting:
     docker:
-      - image: circleci/python:3.6.1
+      - image: python:3.7.3-stretch
     steps:
       - checkout
       - attach_workspace:
