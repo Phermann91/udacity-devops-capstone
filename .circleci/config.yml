@@ -3,7 +3,7 @@ version: 2.1
 #test
 
 jobs:
-  linting_tesing:
+  linting_testing:
     docker:
       - image: python:3.7.3-stretch
     steps:
