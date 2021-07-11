@@ -70,7 +70,8 @@ jobs:
       - run:
           name: test build
           command: |
-            docker build -t udacity-capstone-project .
+            docker build -t udacity-capstone-project:${CIRCLE_WORKFLOW_ID:0:7} .
+            docker images
 
       #- run:
           #name: Build and push to ECR
