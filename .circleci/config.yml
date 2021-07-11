@@ -53,8 +53,8 @@ jobs:
       - image: python:3.7.3-stretch
     steps:
       - checkout
-      - run: yum install -y tar
-      - run: yum install -y gzip
+      #- run: yum install -y tar
+      #- run: yum install -y gzip
 
       - attach_workspace:
           at: .
