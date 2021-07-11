@@ -51,6 +51,7 @@ jobs:
   push-image-ecr:
     docker:
       - image: python:3.7.3-stretch
+    machine: true
     steps:
       - checkout
       #- run: yum install -y tar
@@ -62,6 +63,7 @@ jobs:
       - run:
           name: test build
           command: |
+            echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
             docker build -t udacity-capstone-project .
 
       #- run:
