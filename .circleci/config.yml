@@ -107,5 +107,5 @@ workflows:
   default:
     jobs:
       - linting-testing
-      - push-docker-to-ecr:
+      - eks-deployment:
           requires: [linting-testing]
