@@ -49,22 +49,24 @@ jobs:
             make test
 
   push-image-ecr:
-    docker:
-      - image: python:3.7.3-stretch
+    executor: aws-cli/default
     steps:
       - checkout
-      #- run: yum install -y tar
-      #- run: yum install -y gzip
-
-      - attach_workspace:
-          at: .
-
+      - aws-cli/setup
       - setup_remote_docker
+      - run: sudo apt-get update
+      - run: sudo apt-get install -y python3-pip python-dev
+      - run: sudo pip install --upgrade awscli
+      - run: aws --version
+
+      - run:
+          name: login
+          command: |
+            aws ecr get-login-password --region $AWS_DEFAULT_REGION  | docker login --username AWS --password-stdin 864185776221.dkr.ecr.us-west-2.amazonaws.com \
 
       - run:
           name: test build
           command: |
-            echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
             docker build -t udacity-capstone-project .
 
       #- run:
