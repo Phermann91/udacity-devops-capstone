@@ -50,7 +50,7 @@ jobs:
             . venv/bin/activate
             make test
 
-  push-image-ecr:
+  push-docker-to-ecr:
     executor: aws-cli/default
     steps:
       - checkout
@@ -84,7 +84,6 @@ jobs:
 workflows:
   default:
     jobs:
-      #- linting-testing
-      #- push-image-ecr:
-          #requires: [linting-testing]
-      - push-image-ecr
+      - linting-testing
+      - push-docker-to-ecr:
+          requires: [linting-testing]
