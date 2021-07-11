@@ -7,7 +7,6 @@ WORKDIR /app
 ## Step 2:
 # Copy source ode to working directory
 COPY . flaskr /app/
-COPY . instance/ /app/
 COPY . setup.py /app/
 COPY . setup.cfg /app/
 
