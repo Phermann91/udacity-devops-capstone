@@ -49,8 +49,8 @@ jobs:
             make test
 
   push-image-ecr:
-    docker:
-      - image: python:3.7.3-stretch
+    #docker:
+      #- image: python:3.7.3-stretch
     machine: true
     steps:
       - checkout
