@@ -68,18 +68,16 @@ jobs:
       - setup_remote_docker
 
       - run:
-          name: test build
+          name: build docker
           command: |
             docker build -t udacity-capstone-project:${CIRCLE_WORKFLOW_ID:0:7} .
             docker images
 
-      #- run:
-          #name: Build and push to ECR
-          #command: |
-            #aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 035472407210.dkr.ecr.us-east-1.amazonaws.com
-            #docker build -t udacity-capstone-project .
-            #docker tag udacity-capstone-project:latest 035472407210.dkr.ecr.us-east-1.amazonaws.com/udacity-capstone-project:latest
-            #docker push 035472407210.dkr.ecr.us-east-1.amazonaws.com/udacity-capstone-project:latest
+      - run:
+          name: Push docker to ECR
+          command: |
+            docker tag udacity-capstone-project:${CIRCLE_WORKFLOW_ID:0:7} 035472407210.dkr.ecr.us-east-1.amazonaws.com/udacity-capstone-project:${CIRCLE_WORKFLOW_ID:0:7}
+            docker push 035472407210.dkr.ecr.us-east-1.amazonaws.com/udacity-capstone-project:${CIRCLE_WORKFLOW_ID:0:7}
 
 
       
