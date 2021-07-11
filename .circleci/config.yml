@@ -49,9 +49,8 @@ jobs:
             make test
 
   push-image-ecr:
-    #docker:
-      #- image: python:3.7.3-stretch
-    machine: true
+    docker:
+      - image: python:3.7.3-stretch
     steps:
       - checkout
       #- run: yum install -y tar
@@ -59,6 +58,8 @@ jobs:
 
       - attach_workspace:
           at: .
+
+      - setup_remote_docker
 
       - run:
           name: test build
@@ -79,6 +80,7 @@ jobs:
 workflows:
   default:
     jobs:
-      - linting-testing
-      - push-image-ecr:
-          requires: [linting-testing]
+      #- linting-testing
+      #- push-image-ecr:
+          #requires: [linting-testing]
+      - push-image-ecr
