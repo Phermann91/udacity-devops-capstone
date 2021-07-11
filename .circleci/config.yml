@@ -79,6 +79,13 @@ jobs:
             docker tag udacity-capstone-project:${CIRCLE_WORKFLOW_ID:0:7} 035472407210.dkr.ecr.us-east-1.amazonaws.com/udacity-capstone-project:${CIRCLE_WORKFLOW_ID:0:7}
             docker push 035472407210.dkr.ecr.us-east-1.amazonaws.com/udacity-capstone-project:${CIRCLE_WORKFLOW_ID:0:7}
 
+      - run:
+          name: Deploy to EKS
+          command: |
+            eksctl create cluster --name capstone-eks --managed --node-type "t2.small" --nodes 2
+            ytt -f . -v "image=035472407210.dkr.ecr.us-east-1.amazonaws.com/udacity-capstone-project:${CIRCLE_WORKFLOW_ID:0:7}" > deployment-template.yaml
+            kubectl apply -f deployment-template.yml
+            kubectl get services
 
       
 workflows:

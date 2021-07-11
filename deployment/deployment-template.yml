@@ -1,3 +1,5 @@
+#@ load("@ytt:data", "data")
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -15,7 +17,7 @@ spec:
     spec:
       containers:
         - name: capstone-backend
-          image: phermann91/devopscapstone
+          image: #@ data.values.image
           ports:
             - containerPort: 80
 
