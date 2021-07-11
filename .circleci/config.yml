@@ -53,7 +53,6 @@ jobs:
     steps:
       - checkout
       - aws-cli/setup
-      - setup_remote_docker
       - run: sudo apt-get update
       - run: sudo apt-get install -y python3-pip python-dev
       - run: sudo pip install --upgrade awscli
@@ -63,6 +62,8 @@ jobs:
           name: login
           command: |
             aws ecr get-login-password --region $AWS_DEFAULT_REGION  | docker login --username AWS --password-stdin 864185776221.dkr.ecr.us-west-2.amazonaws.com \
+
+      - setup_remote_docker
 
       - run:
           name: test build
