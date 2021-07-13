@@ -1,8 +1,9 @@
 version: 2.1
 
-#test
 orbs:
   aws-cli: circleci/aws-cli@1.4.0
+  aws-eks: circleci/aws-eks@1.0.3
+  kubernetes: circleci/kubernetes@0.11.2
 
 jobs:
 
@@ -103,10 +104,74 @@ jobs:
             #kubectl apply -f deployment-template.yml
             #kubectl get services
 
+  deployment:
+    executor: aws-eks/python3
+    parameters:
+      cluster-name:
+        description: |
+          udacity-capstone
+        type: string
+    steps:
+      - checkout
+      - kubernetes/install
+      - aws-eks/update-kubeconfig-with-authenticator:
+          cluster-name: << parameters.cluster-name >>
+          install-kubectl: true
+      - kubernetes/create-or-update-resource:
+          get-rollout-status: true
+          resource-file-path: deployment/deployment.yml
+          resource-name: deployment/capstone-deployment
+
+
+  test-cluster:
+    executor: aws-eks/python3
+    parameters:
+      cluster-name:
+        description: |
+          udacity-capstone
+        type: string
+    steps:
+      - kubernetes/install
+      - aws-eks/update-kubeconfig-with-authenticator:
+          cluster-name: << parameters.cluster-name >>
+      - run:
+          name: Test cluster
+          command: |
+            kubectl get svc
+            kubectl get nodes
+            kubectl get deployment
+
       
 workflows:
   default:
     jobs:
       - linting-testing
       - build:
-          requires: [linting-testing]
+          requires: 
+            - linting-testing
+      - aws-eks/create-cluster:
+          cluster-name: udacity-capstone
+      - deployment:
+          cluster-name: udacity-capstone
+          requires:
+            - aws-eks/create-cluster
+      - aws-eks/update-container-image:
+          cluster-name: udacity-capstone
+          container-image-updates: udacity-capstone=035472407210.dkr.ecr.us-east-1.amazonaws.com/udacity-capstone-project:latest
+          post-steps:
+              - kubernetes/delete-resource:
+                  resource-names: udacity-capstone
+                  resource-types: deployment
+                  wait: true
+          record: true
+          requires:
+              - deployment
+          resource-name: deployment/udacity-capstone
+      - test-cluster:
+          cluster-name: udacity-capstone
+          requires:
+            - aws-eks/update-container-image
+      - aws-eks/delete-cluster:
+          cluster-name: udacity-capstone
+          requires:
+            - test-cluster
