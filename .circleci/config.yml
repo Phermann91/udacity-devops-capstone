@@ -165,7 +165,7 @@ workflows:
           container-image-updates: udacity-capstone=035472407210.dkr.ecr.us-east-1.amazonaws.com/udacity-capstone-project:latest
           post-steps:
               - kubernetes/delete-resource:
-                  resource-names: udacity-capstone
+                  resource-names: capstone-backend
                   resource-types: deployment
                   wait: true
           record: true
