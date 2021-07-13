@@ -120,7 +120,7 @@ jobs:
       - kubernetes/create-or-update-resource:
           get-rollout-status: true
           resource-file-path: deployment/deployment.yml
-          resource-name: deployment/capstone-deployment
+          resource-name: deployment/capstone-capstone
 
 
   test-cluster:
@@ -140,6 +140,8 @@ jobs:
             kubectl get svc
             kubectl get nodes
             kubectl get deployment
+
+      # try to access website as well as test
 
       
 workflows:
