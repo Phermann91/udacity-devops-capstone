@@ -162,10 +162,10 @@ workflows:
             # - aws-eks/create-cluster
       - aws-eks/update-container-image:
           cluster-name: udacity-capstone
-          container-image-updates: udacity-capstone=035472407210.dkr.ecr.us-east-1.amazonaws.com/udacity-capstone-project:latest
+          container-image-updates: capstone-backend=035472407210.dkr.ecr.us-east-1.amazonaws.com/udacity-capstone-project:latest
           post-steps:
               - kubernetes/delete-resource:
-                  resource-names: capstone-backend
+                  resource-names: udacity-capstone
                   resource-types: deployment
                   wait: true
           record: true
