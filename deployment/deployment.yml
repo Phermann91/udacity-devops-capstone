@@ -1,5 +1,3 @@
-#@ load("@ytt:data", "data")
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -22,7 +20,7 @@ spec:
     spec:
       containers:
         - name: capstone-backend
-          image: #@ data.values.image
+          image: 035472407210.dkr.ecr.us-east-1.amazonaws.com/udacity-capstone-project:latest
           ports:
             - containerPort: 80
 
