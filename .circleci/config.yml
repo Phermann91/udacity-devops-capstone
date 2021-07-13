@@ -120,7 +120,7 @@ jobs:
       - kubernetes/create-or-update-resource:
           get-rollout-status: true
           resource-file-path: deployment/deployment.yml
-          resource-name: deployment/capstone-capstone
+          resource-name: deployment/udacity-capstone
 
 
   test-cluster:
@@ -153,6 +153,8 @@ workflows:
             - linting-testing
       - aws-eks/create-cluster:
           cluster-name: udacity-capstone
+          requires:
+            - build
       - deployment:
           cluster-name: udacity-capstone
           requires:
