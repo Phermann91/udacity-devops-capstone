@@ -176,7 +176,7 @@ workflows:
           cluster-name: udacity-capstone
           requires:
             - aws-eks/update-container-image
-      # - aws-eks/delete-cluster:
-          # cluster-name: udacity-capstone
-          # requires:
-            # - test-cluster
+      - aws-eks/delete-cluster:
+          cluster-name: udacity-capstone
+          requires:
+            - test-cluster
