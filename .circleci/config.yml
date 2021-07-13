@@ -99,9 +99,9 @@ jobs:
           name: Deploy to EKS
           command: |
             # create cluster manually and and do just a rolling update with new version of the docker container
-            eksctl create cluster --name udacity-capstone --managed --node-type "t2.small" --nodes 2
+            # eksctl create cluster --name udacity-capstone --managed --node-type "t2.small" --nodes 2
             # ytt -f . -v "image=035472407210.dkr.ecr.us-east-1.amazonaws.com/udacity-capstone-project:${CIRCLE_WORKFLOW_ID:0:7}" > deployment-template.yaml
-            kubectl apply -f deployment.yml
+            kubectl apply -f deployment/deployment.yml
             kubectl get services
 
   deployment:
