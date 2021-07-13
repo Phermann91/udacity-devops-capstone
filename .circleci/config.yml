@@ -157,7 +157,7 @@ workflows:
             - build
       - deployment:
           cluster-name: udacity-capstone
-           requires:
+          requires:
              - aws-eks/create-cluster
       - aws-eks/update-container-image:
           cluster-name: udacity-capstone
