@@ -95,14 +95,14 @@ jobs:
             docker tag udacity-capstone-project:${CIRCLE_WORKFLOW_ID:0:7} 035472407210.dkr.ecr.us-east-1.amazonaws.com/udacity-capstone-project:latest
             docker push 035472407210.dkr.ecr.us-east-1.amazonaws.com/udacity-capstone-project:latest
 
-      #- run:
-          #name: Deploy to EKS
-          #command: |
-            ## create cluster manually and and do just a rolling update with new version of the docker container
-            ## eksctl create cluster --name capstone-eks-${CIRCLE_WORKFLOW_ID:0:7} --managed --node-type "t2.small" --nodes 2
-            #ytt -f . -v "image=035472407210.dkr.ecr.us-east-1.amazonaws.com/udacity-capstone-project:${CIRCLE_WORKFLOW_ID:0:7}" > deployment-template.yaml
-            #kubectl apply -f deployment-template.yml
-            #kubectl get services
+      - run:
+          name: Deploy to EKS
+          command: |
+            # create cluster manually and and do just a rolling update with new version of the docker container
+            eksctl create cluster --name udacity-capstone --managed --node-type "t2.small" --nodes 2
+            # ytt -f . -v "image=035472407210.dkr.ecr.us-east-1.amazonaws.com/udacity-capstone-project:${CIRCLE_WORKFLOW_ID:0:7}" > deployment-template.yaml
+            kubectl apply -f deployment.yml
+            kubectl get services
 
   deployment:
     executor: aws-eks/python3
@@ -121,7 +121,6 @@ jobs:
           get-rollout-status: true
           resource-file-path: deployment/deployment.yml
           resource-name: deployment/capstone-deployment
-
 
   test-cluster:
     executor: aws-eks/python3
@@ -147,10 +146,10 @@ jobs:
 workflows:
   default:
     jobs:
-      #- linting-testing
-      #- build:
-          #requires: 
-            #- linting-testing
+      - linting-testing
+      - build:
+          requires: 
+            - linting-testing
       #- aws-eks/create-cluster:
           #cluster-name: udacity-capstone
           #requires:
