@@ -6,7 +6,7 @@
 
 ## Udacity Capstone project overview
 
-This project is part of the [Udacity Cloud DevOps Engineer](https://www.udacity.com/course/cloud-dev-ops-nanodegree--nd9991) Capstone Project. In this project a [blog app](https://flask.palletsprojects.com/tutorial/), part of a Flask tutorial, used as a microservice is being built within a CricleCI CI/CD pipeline and finally deployed on an AWS EKS cluster.
+This project is part of the [Udacity Cloud DevOps Engineer](https://www.udacity.com/course/cloud-dev-ops-nanodegree--nd9991) Capstone Project. In this project a [blog app](https://flask.palletsprojects.com/tutorial/), part of a Flask tutorial, used as a microservice is being built within a CricleCI CI/CD pipeline and finally deployed on an AWS EKS cluster. The choosen deployment strategy is Rolling Deployment.
 
 ## Test the app locally
 
