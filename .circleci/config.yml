@@ -96,13 +96,18 @@ jobs:
             docker push 035472407210.dkr.ecr.us-east-1.amazonaws.com/udacity-capstone-project:latest
 
       - run:
-          name: Deploy to EKS
+          name: Create EKS-Cluster
           command: |
-            # create cluster manually and and do just a rolling update with new version of the docker container
             eksctl create cluster --name udacity-capstone --managed --node-type "t2.small" --nodes 2
-            # ytt -f . -v "image=035472407210.dkr.ecr.us-east-1.amazonaws.com/udacity-capstone-project:${CIRCLE_WORKFLOW_ID:0:7}" > deployment-template.yaml
-            kubectl apply -f deployment/deployment.yml
-            kubectl get services
+
+      #- run:
+          #name: Deploy to EKS
+          #command: |
+            ## create cluster manually and and do just a rolling update with new version of the docker container
+            #eksctl create cluster --name udacity-capstone --managed --node-type "t2.small" --nodes 2
+            ## ytt -f . -v "image=035472407210.dkr.ecr.us-east-1.amazonaws.com/udacity-capstone-project:${CIRCLE_WORKFLOW_ID:0:7}" > deployment-template.yaml
+            ##kubectl apply -f deployment/deployment.yml
+            ##kubectl get services
 
   deployment:
     executor: aws-eks/python3
@@ -140,23 +145,23 @@ jobs:
             kubectl get nodes
             kubectl get deployment
 
-      # try to access website as well as test
 
       
 workflows:
   default:
     jobs:
       - linting-testing
-      #- build:
-          #requires: 
-            #- linting-testing
+      - build:
+          requires: 
+            - linting-testing
       #- aws-eks/create-cluster:
           #cluster-name: udacity-capstone
           #requires:
             #- build
-      #- deployment:
-          #cluster-name: udacity-capstone
-          #requires:
+      - deployment:
+          cluster-name: udacity-capstone
+          requires:
+             - build
              #- aws-eks/create-cluster
       #- aws-eks/update-container-image:
           #cluster-name: udacity-capstone
@@ -170,11 +175,11 @@ workflows:
           #requires:
               #- deployment
           #resource-name: deployment/capstone-deployment
-      #- test-cluster:
-          #cluster-name: udacity-capstone
+      - test-cluster:
+          cluster-name: udacity-capstone
           #requires:
             #- aws-eks/update-container-image
-      - aws-eks/delete-cluster:
-          cluster-name: udacity-capstone
+      #- aws-eks/delete-cluster:
+          #cluster-name: udacity-capstone
           #requires:
             #- test-cluster
