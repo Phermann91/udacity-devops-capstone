@@ -147,9 +147,9 @@ workflows:
   default:
     jobs:
       - linting-testing
-      - build:
-          requires: 
-            - linting-testing
+      #- build:
+          #requires: 
+            #- linting-testing
       #- aws-eks/create-cluster:
           #cluster-name: udacity-capstone
           #requires:
@@ -174,7 +174,7 @@ workflows:
           #cluster-name: udacity-capstone
           #requires:
             #- aws-eks/update-container-image
-      #- aws-eks/delete-cluster:
-          #cluster-name: udacity-capstone
+      - aws-eks/delete-cluster:
+          cluster-name: udacity-capstone
           #requires:
             #- test-cluster
