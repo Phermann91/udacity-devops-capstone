@@ -162,7 +162,7 @@ workflows:
           cluster-name: udacity-capstone
           requires:
              - build
-             - aws-eks/create-cluster
+             #- aws-eks/create-cluster
       - aws-eks/update-container-image:
           cluster-name: udacity-capstone
           container-image-updates: capstone-backend=035472407210.dkr.ecr.us-east-1.amazonaws.com/udacity-capstone-project:latest
