@@ -179,7 +179,7 @@ workflows:
           cluster-name: udacity-capstone
           requires:
               - deployment
-              - aws-eks/update-container-image
+              #- aws-eks/update-container-image
       #- aws-eks/delete-cluster:
           #cluster-name: udacity-capstone
           #requires:
